@@ -1,6 +1,7 @@
-.venv
 <<<<<<< HEAD
 =======
 __pycache__
 >>>>>>> 98e8af7a379055bd613988159d3982553b0dd4e1
 log.txt
+.venv
+venv
