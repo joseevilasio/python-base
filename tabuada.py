@@ -1,19 +1,29 @@
 #! /usr/bin/env python
-"""Imprime a tabuada do 1 ao 10
-Tabuada 1
+"""Imprime a tabuada do 1 ao 10.
 
-1 x 1 = 1
-
+---Tabuada do 1---
+    1 x 1 = 1
+    2 x 1 = 2
+    3 x 1 = 3
+##################
+...
 """
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Jose Junior"
 
+from ctypes import alignment
+
+
 numbers = list(range(1, 11))
+template = """
+--- Tabela de {number} ---
+    {block:>}
+#################
+"""
 
 for number in numbers:
-
-    print(f"Tabuada do número: {number}\n")
+    block = ""
     for other_number in numbers:
-        print(
-            f"Número {number} vezes {other_number} = {number * other_number}")
-    print("_" * 40)
+        operation = f"{number} x {other_number} = {(number * other_number)}\n"
+        block += operation
+        print(template.format(number=number, block=block))
