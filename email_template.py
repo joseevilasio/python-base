@@ -1,25 +1,25 @@
 email_template = """
-Olá, %(nome)s
-Tem interesse em comprar %(produto)s?
+Olá, {nome}
+Tem interesse em comprar {produto}?
 Este produto é ótimo para resolver
-%(texto)s
-Clique agora em %(link)s
+{texto}
+Clique agora em {link}
 
-Apenas %(quantidade)d disponiveis!
-Preço promocional %(preco).2f
+Apenas {quantidade} disponiveis!
+Preço promocional {preco:.2f}
 """
 
 clientes = ["Maria", "Joao", "Bruno"]
 
 for cliente in clientes:
     print(
-        email_template 
-        % {
-            "nome": cliente,
-            "produto": "caneta",
-            "texto": "Escrever muito bem",
-            "link": "https://caneta.com.br",
-            "quantidade": 1,
-            "preco": 50.5,
-        }
+        email_template.format
+        (
+            nome=cliente,
+            produto="caneta",
+            texto="Escrever muito bem",
+            link="https://caneta.com.br",
+            quantidade=1,
+            preco=50.5,
+        )
     )
