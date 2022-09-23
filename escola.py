@@ -14,14 +14,24 @@ aula_ingles = ["Erik", "Maia", "Joana", "Carlos", "Antonio"]
 aula_musica = ["Erik", "Carlos", "Maria"]
 aula_danca = ["Gustavo", "Sofia", "Joana", "Antonio"]
 
-aula_ingles_sala1 = []
-aula_ingles_sala2 = []
+atividades = [
+    ("Inglês", aula_ingles),
+    ("Música", aula_musica),
+    ("Dança", aula_danca),
+]
 
-for aluno in aula_ingles:
-    if aluno in sala1:
-        aula_ingles_sala1.append(aluno)
-    elif aluno in sala2:
-        aula_ingles_sala2.append(aluno)
+for nome, atividade in atividades:
+    atividade_sala1 = []
+    atividade_sala2 = []
+    print(f"Aula de {nome}")
+    print()
 
-print(aula_ingles_sala1)
-print(aula_ingles_sala2)
+    for aluno in atividade:
+        if aluno in sala1:
+            atividade_sala1.append(aluno)
+        elif aluno in sala2:
+            atividade_sala2.append(aluno)
+
+    print("Sala 01: ", atividade_sala1)
+    print("Sala 02: ", atividade_sala2)
+    print("-" * 40)
