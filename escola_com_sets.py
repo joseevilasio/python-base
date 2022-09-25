@@ -20,17 +20,12 @@ atividades = [
     ("Dança", aula_danca),
 ]
 
-for nome, atividade in atividades:
-    atividade_sala1 = []
-    atividade_sala2 = []
+for nome, atividade in atividades:    
     print(f"Aula de {nome}")
-    print()
+    print() 
 
-    for aluno in atividade:
-        if aluno in sala1:
-            atividade_sala1.append(aluno)
-        elif aluno in sala2:
-            atividade_sala2.append(aluno)
+    atividade_sala1 = set(sala1).intersection(set(atividade))
+    atividade_sala2 = set(sala2).intersection(set(atividade))
 
     print("Sala 01: ", atividade_sala1)
     print("Sala 02: ", atividade_sala2)
