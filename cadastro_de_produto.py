@@ -7,18 +7,29 @@ __author__ = "Jose Junior"
 
 produto = {
     "nome": "Caneta",
-    "cor1": "azul",
-    "cor2": "branco",
+    "cores": ["azul", "branco"],
     "preco": 3.23,
-    "dimensao_altura": 12.1,
-    "dimensao_largura":  0.8,
+    "dimensao": {
+        "altura": 12.1,
+        "largura": 0.8,
+    },
     "em_estoque": True,
     "codigo": 45678,
     "codebar": None,
 }
 
-compra = ("Bruno", produto["nome"], 3)
-total_compra = compra[2] * produto["preco"]
+cliente = {
+    "nome": "Bruno"
+}
+
+compra = {
+    "cliente": cliente,
+    "produto": produto,
+    "quantidade": 3
+}
+
+total_compra = compra["quantidade"] * produto["preco"]
 
 print(
-    f"O Cliente {compra[0]} comprou {compra[1]} e pagou o total de {total_compra}")
+    f"O Cliente {compra['cliente']['nome']} "
+    f"comprou {compra['quantidade']} unidades de {produto['nome']} e pagou o total de {total_compra}")
