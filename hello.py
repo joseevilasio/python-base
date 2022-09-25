@@ -14,7 +14,7 @@ Execucao
 
    python3
    ou
-   ./hello.py   
+   ./hello.py
 """
 __version__ = "0.1.2"
 __author__ = "Jose Junior"
@@ -26,10 +26,10 @@ current_language = os.getenv("LANG", "en_US")[:5]
 
 msg = {
 		"en_US": "Hello, World!",
-		"pt_BR": "Ola, Mundo!",
+		"pt_BR": "Olá, Mundo!",
 		"it_IT": "Ciao, Mondo!",
 		"es_SP": "Hola, Mundo!",
-		"fr_FR":"Bonjour Monde",
+		"fr_FR": "Bonjour Monde!",
 }
 
 print(msg.get(current_language,"Hello, World!"))
