@@ -14,13 +14,13 @@ aula_ingles = ["Erik", "Maia", "Joana", "Carlos", "Antonio"]
 aula_musica = ["Erik", "Carlos", "Maria"]
 aula_danca = ["Gustavo", "Sofia", "Joana", "Antonio"]
 
-atividades = [
-    ("Inglês", aula_ingles),
-    ("Música", aula_musica),
-    ("Dança", aula_danca),
-]
+atividades = {
+    "Inglês": aula_ingles,
+    "Música": aula_musica,
+    "Dança": aula_danca,
+}
 
-for nome, atividade in atividades:    
+for nome, atividade in atividades.items():    
     print(f"Aula de {nome}")
     print() 
 
