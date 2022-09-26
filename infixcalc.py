@@ -24,10 +24,12 @@ n1:5
 n2:4
 9
 """
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 __author__ = "Jose Junior"
 
 import sys
+
+# Dados
 
 arguments = {
     "operation": None,
@@ -35,38 +37,44 @@ arguments = {
     "n2": None,
 }
 
+valid_operantions = ("sum", "sub", "mul", "sub")
+
 # Input de Dados
 
-if len(sys.argv[1:]) < 1:
+if not sys.argv[1:]:
     arguments["operation"] = input(
         "Insert operantion 'sum' 'sub' 'mul' 'div': ").strip()
-    if arguments["operation"] not in ("sum", "sub", "mul", "sub"):
-        print(f"Invalid Option '{arguments['operation']}'")
-        sys.exit()
-    arguments["n1"] = int(input("Insert number: "))
-    if arguments["n1"] is str:
-        print(f"Invalid Option '{arguments['n1']}'")
-        sys.exit()
-    arguments["n2"] = int(input("Insert number: "))
-    if arguments["n2"] is str:
-        print(f"Invalid Option '{arguments['n1']}'")
-        sys.exit()
+    arguments["n1"] = input("Insert number: ")
+    arguments["n2"] = input("Insert number: ")
 
 # Buscando dados da argv
 
-elif len(sys.argv[1:]) > 1:
+elif len(sys.argv[1:]) == 3:
     arguments["operation"] = sys.argv[1:][0]
-    if arguments["operation"] not in ("sum", "sub", "mul", "sub"):
-        print(f"Invalid Option '{arguments['operation']}'")
-        sys.exit()
-    arguments["n1"] = int(sys.argv[1:][1])
-    if arguments["n1"] is str:
-        print(f"Invalid Option '{arguments['n1']}'")
-        sys.exit()
-    arguments["n2"] = int(sys.argv[1:][2])
-    if arguments["n2"] is str:
-        print(f"Invalid Option '{arguments['n1']}'")
-        sys.exit()
+    arguments["n1"] = sys.argv[1:][1]
+    arguments["n2"] = sys.argv[1:][2]
+
+# Validação
+
+elif len(sys.argv[1:]) != 3:
+    print("Option numbers invalid")
+    print("Ex: sum 5 5")
+    sys.exit(1)
+
+for key, value in arguments.items():
+    if key == "operation":
+        if arguments["operation"] not in valid_operantions:
+            print(f"Invalid Option '{arguments['operation']}'")
+            print(valid_operantions)
+            sys.exit(1)
+    if key in ("n1", "n2"):
+        if not arguments[key].replace(".", "").isdigit():
+            print(f"Option invalid {arguments[key]}")
+            sys.exit(1)
+        if "." in arguments[key]:
+            arguments[key] = float(arguments[key])
+        else:
+            arguments[key] = int(arguments[key])
 
 # Operação
 
