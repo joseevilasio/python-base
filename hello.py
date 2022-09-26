@@ -41,7 +41,12 @@ for arg in sys.argv[1:]:
 current_language = arguments["lang"]
 
 if current_language is None:
-    current_language = os.getenv("LANG", "en_US")[:5]
+    current_language = os.getenv("LANG")
+    # TODO: Usar repetição
+    if current_language is None:
+        current_language = input("Choose a language:")
+
+current_language = current_language[:5]
 
 msg = {
     "en_US": "Hello, World!",
