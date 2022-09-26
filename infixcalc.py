@@ -35,11 +35,38 @@ arguments = {
     "n2": None,
 }
 
+# Input de Dados
+
 if len(sys.argv[1:]) < 1:
     arguments["operation"] = input(
         "Insert operantion 'sum' 'sub' 'mul' 'div': ").strip()
+    if arguments["operation"] not in ("sum", "sub", "mul", "sub"):
+        print(f"Invalid Option '{arguments['operation']}'")
+        sys.exit()
     arguments["n1"] = int(input("Insert number: "))
+    if arguments["n1"] is str:
+        print(f"Invalid Option '{arguments['n1']}'")
+        sys.exit()
     arguments["n2"] = int(input("Insert number: "))
+    if arguments["n2"] is str:
+        print(f"Invalid Option '{arguments['n1']}'")
+        sys.exit()
+
+# Buscando dados da argv
+
+elif len(sys.argv[1:]) > 1:
+    arguments["operation"] = sys.argv[1:][0]
+    if arguments["operation"] not in ("sum", "sub", "mul", "sub"):
+        print(f"Invalid Option '{arguments['operation']}'")
+        sys.exit()
+    arguments["n1"] = int(sys.argv[1:][1])
+    if arguments["n1"] is str:
+        print(f"Invalid Option '{arguments['n1']}'")
+        sys.exit()
+    arguments["n2"] = int(sys.argv[1:][2])
+    if arguments["n2"] is str:
+        print(f"Invalid Option '{arguments['n1']}'")
+        sys.exit()
 
 # Operação
 
