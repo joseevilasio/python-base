@@ -31,6 +31,7 @@ __author__ = "Jose Junior"
 
 import sys
 import os
+from datetime import datetime
 
 # Dados
 
@@ -94,9 +95,12 @@ elif arguments["operation"] == "div":
 
 path = os.curdir
 filepath = os.path.join(path, "infixcalc.log")
+timestamp = datetime.now().isoformat()
+user = os.getenv('USER', 'anonymous')
+
 with open(filepath, "a") as file_:
     file_.write(
-        f"Operação: {arguments['operation']} n1: {arguments['n1']} n2: {arguments['n2']} -> {result}\n")
+        f"{timestamp} - {user} Op: {arguments['operation']} n1: {arguments['n1']} n2: {arguments['n2']} -> {result}\n")
 
 # Resultado
 
