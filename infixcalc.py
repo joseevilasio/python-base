@@ -23,11 +23,14 @@ operação: sum
 n1:5
 n2:4
 9
+
+Os resultados serão salvos em "infixcalc.log"
 """
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = "Jose Junior"
 
 import sys
+import os
 
 # Dados
 
@@ -86,6 +89,14 @@ elif arguments["operation"] == "mul":
     result = arguments["n1"] * arguments["n2"]
 elif arguments["operation"] == "div":
     result = arguments["n1"] / arguments["n2"]
+
+# Criar log
+
+path = os.curdir
+filepath = os.path.join(path, "infixcalc.log")
+with open(filepath, "a") as file_:
+    file_.write(
+        f"Operação: {arguments['operation']} n1: {arguments['n1']} n2: {arguments['n2']} -> {result}\n")
 
 # Resultado
 
