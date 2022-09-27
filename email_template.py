@@ -23,11 +23,9 @@ filetemplate = os.path.join(path, "template.txt")
 clientes = []
 
 for line in open(filepath):
-    # TODO: Substituir por list comprehension
-    clientes.append(line.split(","))
-
-for name, email in clientes:
     # TODO: Substituir por envio de email
+    name, email = clientes.append(line.split(","))
+
     print(f"--> Enviando para o email: {email} <--\n")
     print(
         open(filetemplate).read().format
