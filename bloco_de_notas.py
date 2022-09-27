@@ -26,6 +26,8 @@ arguments = {
 
 commands = ["new", "read"]
 
+# Input de Dados
+
 if not sys.argv[1:]:
     print(f"É necessário utilizar comandos para iniciar {commands}")
     sys.exit(1)
@@ -35,5 +37,12 @@ elif len(sys.argv[1:]) != 2:
     sys.exit(1)
 
 elif len(sys.argv[1:]) == 2:
+    arguments["command"] = sys.argv[1:][0]
+    arguments["title"] = sys.argv[1:][1]
     arguments["tag"] = input("tag: ")
     arguments["text"] = input("text: ")
+
+# Validação de Dados
+
+for key, value in arguments.items():
+    print(key, value)
