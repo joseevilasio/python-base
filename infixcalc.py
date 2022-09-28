@@ -72,10 +72,10 @@ for key, value in arguments.items():
             print(valid_operantions)
             sys.exit(1)
     if key in ("n1", "n2"):
-        if not arguments[key].replace(".", "").isdigit():
+        if not arguments[f"{key}"].replace(".", "").isdigit():
             print(f"Option invalid {arguments[key]}")
             sys.exit(1)
-        if "." in arguments[key]:
+        if "." in arguments[f"{key}"]:
             arguments[key] = float(arguments[key])
         else:
             arguments[key] = int(arguments[key])
@@ -98,9 +98,13 @@ filepath = os.path.join(path, "infixcalc.log")
 timestamp = datetime.now().isoformat()
 user = os.getenv('USER', 'anonymous')
 
-with open(filepath, "a") as file_:
-    file_.write(
-        f"{timestamp} - {user} Op: {arguments['operation']} n1: {arguments['n1']} n2: {arguments['n2']} -> {result}\n")
+try:
+    with open(filepath, "a") as file_:
+        file_.write(
+            f"{timestamp} - {user} Op: {arguments['operation']} n1: {arguments['n1']} n2: {arguments['n2']} -> {result}\n")
+except PermissionError as e:
+    print(f"{str(e)}")
+    sys.exit(1)
 
 # Resultado
 
