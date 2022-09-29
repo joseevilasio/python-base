@@ -32,6 +32,18 @@ __author__ = "Jose Junior"
 import sys
 import os
 from datetime import datetime
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("jose", log_level)
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+    '%(asctime)s  %(name)s  %(levelname)s '
+    'l:%(lineno)d f:%(filename)s: %(message)s'
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 # Dados
 
@@ -103,7 +115,10 @@ try:
         file_.write(
             f"{timestamp} - {user} Op: {arguments['operation']} n1: {arguments['n1']} n2: {arguments['n2']} -> {result}\n")
 except PermissionError as e:
-    print(f"{str(e)}")
+    log.error(
+        "User not permission write in local - %s",
+        str(e)
+    )    
     sys.exit(1)
 
 # Resultado
