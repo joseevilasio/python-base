@@ -55,77 +55,81 @@ arguments = {
 
 valid_operantions = ("sum", "sub", "mul", "sub")
 
-# Input de Dados
+while True:
+    # Input de Dados
 
-if not sys.argv[1:]:
-    arguments["operation"] = input(
-        "Insert operantion 'sum' 'sub' 'mul' 'div': ").strip()
-    arguments["n1"] = input("Insert number: ")
-    arguments["n2"] = input("Insert number: ")
+    if not sys.argv[1:]:
+        arguments["operation"] = input(
+            "Insert operantion 'sum' 'sub' 'mul' 'div': ").strip()
+        arguments["n1"] = input("Insert number: ")
+        arguments["n2"] = input("Insert number: ")
 
-# Buscando dados da argv
+    # Buscando dados da argv
 
-elif len(sys.argv[1:]) == 3:
-    arguments["operation"] = sys.argv[1:][0]
-    arguments["n1"] = sys.argv[1:][1]
-    arguments["n2"] = sys.argv[1:][2]
+    elif len(sys.argv[1:]) == 3:
+        arguments["operation"] = sys.argv[1:][0]
+        arguments["n1"] = sys.argv[1:][1]
+        arguments["n2"] = sys.argv[1:][2]
 
-# Validação
+    # Validação
 
-elif len(sys.argv[1:]) != 3:
-    print("Option numbers invalid")
-    print("Ex: sum 5 5")
-    sys.exit(1)
+    elif len(sys.argv[1:]) != 3:
+        print("Option numbers invalid")
+        print("Ex: sum 5 5")
+        sys.exit(1)
 
-for key, value in arguments.items():
-    if key == "operation":
-        if arguments["operation"] not in valid_operantions:
-            print(f"Invalid Option '{arguments['operation']}'")
-            print(valid_operantions)
-            sys.exit(1)
-    if key in ("n1", "n2"):
-        if not arguments[f"{key}"].replace(".", "").isdigit():
-            print(f"Option invalid {arguments[key]}")
-            sys.exit(1)
-        if "." in arguments[f"{key}"]:
-            arguments[key] = float(arguments[key])
-        else:
-            arguments[key] = int(arguments[key])
+    for key, value in arguments.items():
+        if key == "operation":
+            if arguments["operation"] not in valid_operantions:
+                print(f"Invalid Option '{arguments['operation']}'")
+                print(valid_operantions)
+                sys.exit(1)
+        if key in ("n1", "n2"):
+            if not arguments[f"{key}"].replace(".", "").isdigit():
+                print(f"Option invalid {arguments[key]}")
+                sys.exit(1)
+            if "." in arguments[f"{key}"]:
+                arguments[key] = float(arguments[key])
+            else:
+                arguments[key] = int(arguments[key])
 
-# Operação
+    # Operação
 
-if arguments["operation"] == "sum":
-    result = arguments["n1"] + arguments["n2"]
-elif arguments["operation"] == "sub":
-    result = arguments["n1"] - arguments["n2"]
-elif arguments["operation"] == "mul":
-    result = arguments["n1"] * arguments["n2"]
-elif arguments["operation"] == "div":
-    result = arguments["n1"] / arguments["n2"]
+    if arguments["operation"] == "sum":
+        result = arguments["n1"] + arguments["n2"]
+    elif arguments["operation"] == "sub":
+        result = arguments["n1"] - arguments["n2"]
+    elif arguments["operation"] == "mul":
+        result = arguments["n1"] * arguments["n2"]
+    elif arguments["operation"] == "div":
+        result = arguments["n1"] / arguments["n2"]
 
-# Criar log
+    # Criar log
 
-path = os.curdir
-filepath = os.path.join(path, "infixcalc.log")
-timestamp = datetime.now().isoformat()
-user = os.getenv('USER', 'anonymous')
+    path = os.curdir
+    filepath = os.path.join(path, "infixcalc.log")
+    timestamp = datetime.now().isoformat()
+    user = os.getenv('USER', 'anonymous')
 
-try:
-    with open(filepath, "a") as file_:
-        file_.write(
-            f"{timestamp} - {user} Op: {arguments['operation']} n1: {arguments['n1']} n2: {arguments['n2']} -> {result}\n")
-except PermissionError as e:
-    log.error(
-        "User not permission write in local - %s",
-        str(e)
-    )    
-    sys.exit(1)
+    try:
+        with open(filepath, "a") as file_:
+            file_.write(
+                f"{timestamp} - {user} Op: {arguments['operation']} n1: {arguments['n1']} n2: {arguments['n2']} -> {result}\n")
+    except PermissionError as e:
+        log.error(
+            "User not permission write in local - %s",
+            str(e)
+        )
+        sys.exit(1)
 
-# Resultado
+    # Resultado
 
-print(
-    f"Operação: {arguments['operation']}\n "
-    f"n1: {arguments['n1']}\n "
-    f"n2: {arguments['n2']}\n "
-    f"{result}"
-)
+    print(
+        f"Operação: {arguments['operation']}\n "
+        f"n1: {arguments['n1']}\n "
+        f"n2: {arguments['n2']}\n "
+        f"Resultado: {result}"
+    )
+
+    if input("Pressione enter seguir com as operações ou qualquer tecla para sair"):
+        break
