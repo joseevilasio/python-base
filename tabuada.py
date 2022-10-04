@@ -11,7 +11,7 @@
 __version__ = "0.1.1"
 __author__ = "Jose Junior"
 
-numbers = list(range(1, 11))
+numbers = range(1, 11)
 
 for number in numbers:
     print("{:-^18}".format(f"Tabela do {number}"))
