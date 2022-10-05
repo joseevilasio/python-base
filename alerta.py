@@ -14,6 +14,19 @@ umidade: 90
 ... 
 'ALERTA!!! 🥵 Perigo calor extremo'
 """
+import os
+import logging
+
+log_level = os.getenv("LOG_LEVEL", "WARNING").upper()
+log = logging.Logger("jose", log_level)
+ch = logging.StreamHandler()
+ch.setLevel(log_level)
+fmt = logging.Formatter(
+    '%(asctime)s  %(name)s  %(levelname)s '
+    'l:%(lineno)d f:%(filename)s: %(message)s'
+)
+ch.setFormatter(fmt)
+log.addHandler(ch)
 
 while True:
 
@@ -21,8 +34,10 @@ while True:
         temperature = float(input("Insert the temperature: "))
         humidity = float(input("Insert the humidity: "))
     except ValueError as e:
-        print(f"{str(e)}")
-        print("Insert number float or integer")
+        log.error(
+            "Insert number float or integer - %s",
+            str(e)
+        )
         continue
 
     if temperature > 45.0:
