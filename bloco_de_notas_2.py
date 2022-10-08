@@ -26,7 +26,7 @@ if not arguments:
     sys.exit(1)
 
 if arguments[0] not in cmds:
-    print(f"Invalid command {argument[0]}")
+    print(f"Invalid command {arguments[0]}")
 
 if arguments[0] == "read":
     # leitura das notas
