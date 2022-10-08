@@ -30,5 +30,10 @@ path = os.curdir
 filepath_room = os.path.join(path, "quartos.txt")
 filepath_reservation = os.path.join(path, "reservas.txt")
 
+room = {}
+reservation = {}
+
 for line in open(filepath_room):
-    print(line)
+    codigo, nome, preco = line.split(",")
+    print(f"{codigo} - {nome} - R$ {preco}")
+    
