@@ -26,14 +26,42 @@ __author__ = "Jose Junior"
 
 import os
 
+# Path
 path = os.curdir
 filepath_room = os.path.join(path, "quartos.txt")
 filepath_reservation = os.path.join(path, "reservas.txt")
 
 room = {}
-reservation = {}
+reservation = {
+    "client": None,
+    "name": None,
+    "codigo": None,
+    "days": None,
+    }
 
-for line in open(filepath_room):
-    codigo, nome, preco = line.split(",")
-    print(f"{codigo} - {nome} - R$ {preco}")
-    
+while True:
+
+    # Reservas, inserir no dict
+    """ for line in open(filepath_reservation):    
+        client, room, days = line.replace("\n","").split(",")
+        #reservation[codigo] = [name, price]       """  
+
+    # Quartos, inserir no dict
+    for line in open(filepath_room):    
+        codigo, name, price = line.replace("\n","").split(",")
+        room[codigo] = [name, price]
+        print(f"{codigo} - {name} - R$ {price} -- XXX")
+
+    client = input("Digite o seu nome: ").strip().title()
+    room_select = int(input("Código do quarto selecionado: "))
+    days = int(input("Quantidade de dias: "))
+
+    print(room.keys())
+
+    if room_select in room.keys():
+        print("deu bom")
+        price_total = days * price
+    break
+
+#print(f"Sr(a) {client}, resersa realizada. Quarto {codigo}, {days} dias, valor total R$ {price_total}")
+print(room)
