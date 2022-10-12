@@ -26,42 +26,56 @@ __author__ = "Jose Junior"
 
 import os
 
-# Path
+# Config diretório de Arquivos
 path = os.curdir
 filepath_room = os.path.join(path, "quartos.txt")
 filepath_reservation = os.path.join(path, "reservas.txt")
 
-room = {}
-reservation = {
-    "client": None,
-    "name": None,
-    "codigo": None,
-    "days": None,
-    }
+# Estrutura de dados
+rooms = {
+    "codigo": [],
+    "room": [],
+    "price": [],
+}
 
+reservations = {
+    "codigo": [],
+    "room": [],
+    "client": [],
+    "status": [],
+    "days": [],
+}
+
+# Reservas, inserir no dict
+for line in open(filepath_reservation):
+    client, room, days = line.replace("\n", "").split(",")
+    reservations["client"].append(client)
+    reservations["room"].append(room)
+    reservations["days"].append(room)
+
+# Quartos, inserir no dict
+for line in open(filepath_room):
+    codigo, room, price = line.replace("\n", "").split(",")
+    rooms["codigo"].append(codigo)
+    rooms["room"].append(room)
+    rooms["price"].append(price)
+
+# Inserir dados do usuário
 while True:
 
-    # Reservas, inserir no dict
-    """ for line in open(filepath_reservation):    
-        client, room, days = line.replace("\n","").split(",")
-        #reservation[codigo] = [name, price]       """  
-
-    # Quartos, inserir no dict
-    for line in open(filepath_room):    
-        codigo, name, price = line.replace("\n","").split(",")
-        room[codigo] = [name, price]
-        print(f"{codigo} - {name} - R$ {price} -- XXX")
-
     client = input("Digite o seu nome: ").strip().title()
-    room_select = int(input("Código do quarto selecionado: "))
+    codigo = int(input("Código do quarto selecionado: "))
     days = int(input("Quantidade de dias: "))
 
-    print(room.keys())
+    infor_input = f"{client},{codigo},{days}"
 
-    if room_select in room.keys():
-        print("deu bom")
-        price_total = days * price
+    # TODO: Arquivo para dá certo tem que já ter uma linha em branco, verificar forma de resolver
+    with open(filepath_reservation, "a") as file_:
+        file_.write("".join(infor_input) + "\n")
+
     break
 
-#print(f"Sr(a) {client}, resersa realizada. Quarto {codigo}, {days} dias, valor total R$ {price_total}")
-print(room)
+print(reservations)
+print(rooms)
+
+print(f"Sr(a) {client}, resersa realizada. Quarto {codigo}, {days} dias, valor total R$ XXX")
