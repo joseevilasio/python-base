@@ -101,14 +101,17 @@ while True:
         if codigo == int(value_codigo):
             room = value_room
             break
-        else:
-            pass
 
     infor_input = f"{client},{room},{days}"
 
-    # TODO: Arquivo para dá certo tem que já ter uma linha em branco, verificar forma de resolver
-    with open(filepath_reservation, "a") as file_:
-        file_.write("".join(infor_input) + "\n")
+    try:
+        # TODO: Arquivo para dá certo tem que já ter uma linha em branco, verificar forma de resolver
+        with open(filepath_reservation, "a") as file_:
+            file_.write("".join(infor_input) + "\n")
+    except PermissionError as e:
+        log.error("Sem permissão para acessar o banco de dados - %s", str(e))
+        sys.exit(1)
+        break
 
     break
 
