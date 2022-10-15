@@ -56,29 +56,27 @@ reservations = {
     "client": [],
     "days": [],
 }
-
-# Reservas, carregar dados no dict reservations
-try:
-    for line in open(filepath_reservation):
-        client, room, days = line.replace("\n", "").split(",")
-        reservations["client"].append(client)
-        reservations["room"].append(room)
-        reservations["days"].append(room)
-
-    # Quartos, carregar dados no dict rooms e exibir informações
-    for line in open(filepath_room):
-        codigo, room, price = line.replace("\n", "").split(",")
-        rooms["codigo"].append(codigo)
-        rooms["room"].append(room)
-        rooms["price"].append(price)
-        print(line)
-
-except FileNotFoundError as e:
-    log.error("Falha na conexão com banco de dados - %s", str(e))
-    sys.exit(1)
-
 # Input de dados do usuário
 while True:
+    # Reservas, carregar dados no dict reservations
+    try:
+        for line in open(filepath_reservation):
+            client, room, days = line.replace("\n", "").split(",")
+            reservations["client"].append(client)
+            reservations["room"].append(room)
+            reservations["days"].append(room)
+
+        # Quartos, carregar dados no dict rooms e exibir informações
+        for line in open(filepath_room):
+            codigo, room, price = line.replace("\n", "").split(",")
+            rooms["codigo"].append(codigo)
+            rooms["room"].append(room)
+            rooms["price"].append(price)
+            print(line)
+
+    except FileNotFoundError as e:
+        log.error("Falha na conexão com banco de dados - %s", str(e))
+        sys.exit(1)
     # input
     client = input("Digite o seu nome: ").strip().title()
     try:
@@ -108,6 +106,7 @@ while True:
                     #  branco, verificar forma de resolver
                     with open(filepath_reservation, "a") as file_:
                         file_.write("".join(infor_input) + "\n")
+                        file_.close()
                 except PermissionError as e:
                     log.error(
                         "Sem permissão para acessar o banco de dados - %s",
