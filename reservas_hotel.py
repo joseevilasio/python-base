@@ -65,24 +65,17 @@ try:
         reservations["room"].append(room)
         reservations["days"].append(room)
 
-    # Quartos, carregar dados no dict rooms
+    # Quartos, carregar dados no dict rooms e exibir informações
     for line in open(filepath_room):
         codigo, room, price = line.replace("\n", "").split(",")
         rooms["codigo"].append(codigo)
         rooms["room"].append(room)
         rooms["price"].append(price)
+        print(line)
 
-        if room in reservations["room"]:
-            print("disponivel")
 except FileNotFoundError as e:
     log.error("Falha na conexão com banco de dados - %s", str(e))
     sys.exit(1)
-
-# Exibir informações para usuário
-""" for key_rooms, value_rooms, in rooms.items():
-    # Exibir informações para usuário
-    print(f"Quartos --> {value_rooms}") """
-
 
 # Input de dados do usuário
 while True:
@@ -96,26 +89,40 @@ while True:
         sys.exit(1)
         break
 
-    # Atribuição do Quarto relacionado ao codigo e validação de reserva
-    for value_codigo, value_room in zip(rooms["codigo"][1:], rooms["room"][1:]):
-        if codigo == int(value_codigo):
-            room = value_room
-            break
+    if str(codigo) in rooms["codigo"][1:]:
+        # Atribuição do Quarto relacionado ao codigo e validação de reserva
+        for value_codigo, value_room, value_price in zip(rooms["codigo"][1:],
+                                                         rooms["room"][1:],
+                                                         rooms["price"][1:]
+                                                         ):
+            if codigo == int(value_codigo):
+                if value_room in reservations["room"][1:]:
+                    print(f"{value_room} já reservado!")
+                    break
 
-    infor_input = f"{client},{room},{days}"
+                infor_input = f"{client},{value_room},{days}"
+                price_total = days * int(value_price)
 
-    try:
-        # TODO: Arquivo para dá certo tem que já ter uma linha em branco, verificar forma de resolver
-        with open(filepath_reservation, "a") as file_:
-            file_.write("".join(infor_input) + "\n")
-    except PermissionError as e:
-        log.error("Sem permissão para acessar o banco de dados - %s", str(e))
+                try:
+                    # TODO: Arquivo para dá certo tem que já ter uma linha em
+                    #  branco, verificar forma de resolver
+                    with open(filepath_reservation, "a") as file_:
+                        file_.write("".join(infor_input) + "\n")
+                except PermissionError as e:
+                    log.error(
+                        "Sem permissão para acessar o banco de dados - %s",
+                        str(e)
+                    )
+                    sys.exit(1)
+                    break
+                print(
+                    f"Sr(a) {client}, resersa realizada com sucesso! "
+                    f"{codigo}-{value_room}, {days} dias,"
+                    f"valor total R$ {price_total}.")
+    else:
+        print(f"Quarto > {codigo} < selecionado não encontrado")
         sys.exit(1)
         break
 
-    break
-
-# print(reservations)
-# print(rooms)
-
-#print(f"Sr(a) {client}, resersa realizada. Quarto {codigo}, {days} dias, valor total R$ XXX")
+    if input("Pressione ENTER fazer uma nova reserva ou qualquer tecla para sair "):
+        break
