@@ -6,6 +6,8 @@ __author__ = "Jose Junior"
 
 import sys
 import os
+import smtplib
+from email.mime.text import MIMEText
 
 # Input argv
 arguments = sys.argv[1:]
@@ -20,21 +22,28 @@ filename = arguments[0]
 path = os.curdir
 filepath = os.path.join(path, filename)
 filetemplate = os.path.join(path, "template.txt")
-clientes = []
 
-for line in open(filepath):
-    # TODO: Substituir por envio de email
-    name, email = clientes.append(line.split(","))
-
-    print(f"--> Enviando para o email: {email} <--\n")
-    print(
-        open(filetemplate).read().format
-        (
-            nome=name,
-            produto="caneta",
-            texto="Escrever muito bem",
-            link="https://caneta.com.br",
-            quantidade=1,
-            preco=50.5,
+with smtplib.SMTP(host="localhost", port=8025) as server:
+    for line in open(filepath):
+        name, email = line.split(",")
+        text = (
+            open(filetemplate).read().format
+            (
+                nome=name,
+                produto="caneta",
+                texto="Escrever muito bem",
+                link="https://caneta.com.br",
+                quantidade=1,
+                preco=50.5,
+            )
         )
-    )
+
+        from_ = "josejunior@server.com"
+        to = ", ".join([email])
+
+        message = MIMEText(text)
+        message['Subject'] = "Compre mais"
+        message['From'] = from_
+        message['To'] = to
+
+        server.sendmail(from_, to, message.as_string())
