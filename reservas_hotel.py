@@ -93,7 +93,7 @@ while True:
                                                          rooms["room"][1:],
                                                          rooms["price"][1:]
                                                          ):
-            if codigo == int(value_codigo):
+            if int(codigo) == int(value_codigo):
                 if value_room in reservations["room"][1:]:
                     print(f"{value_room} já reservado!")
                     break
