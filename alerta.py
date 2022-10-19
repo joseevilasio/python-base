@@ -28,17 +28,22 @@ fmt = logging.Formatter(
 ch.setFormatter(fmt)
 log.addHandler(ch)
 
-while True:
+# TODO: Mover para modúlo de utilidades
 
+
+def read_inputs():
+    """Inputs of user for main."""
     try:
         temperature = float(input("Insert the temperature: "))
         humidity = float(input("Insert the humidity: "))
     except ValueError as e:
-        log.error(
-            "Insert number float or integer - %s",
-            str(e)
-        )
-        continue
+        log.error("Insert number float or integer - %s", str(e))
+    return temperature, humidity
+
+
+while True:
+
+    temperature, humidity = read_inputs()
 
     if temperature > 45.0:
         msg = "ALERTA!!! 🥵 Perigo calor extremo"
