@@ -53,7 +53,19 @@ arguments = {
     "n2": None,
 }
 
-valid_operantions = ("sum", "sub", "mul", "sub")
+valid_operantions = {
+    "sum": lambda a, b: a + b,
+    "sub": lambda a, b: a - b,
+    "mul": lambda a, b: a * b,
+    "div": lambda a, b: a / b,
+}
+
+# Diretório de log
+
+path = os.curdir
+filepath = os.path.join(path, "infixcalc.log")
+timestamp = datetime.now().isoformat()
+user = os.getenv('USER', 'anonymous')
 
 while True:
     # Input de Dados
@@ -95,21 +107,10 @@ while True:
 
     # Operação
 
-    if arguments["operation"] == "sum":
-        result = arguments["n1"] + arguments["n2"]
-    elif arguments["operation"] == "sub":
-        result = arguments["n1"] - arguments["n2"]
-    elif arguments["operation"] == "mul":
-        result = arguments["n1"] * arguments["n2"]
-    elif arguments["operation"] == "div":
-        result = arguments["n1"] / arguments["n2"]
+    result = valid_operantions[arguments["operation"]](
+        arguments["n1"], arguments["n2"])
 
-    # Criar log
-
-    path = os.curdir
-    filepath = os.path.join(path, "infixcalc.log")
-    timestamp = datetime.now().isoformat()
-    user = os.getenv('USER', 'anonymous')
+    # Criando log
 
     try:
         with open(filepath, "a") as file_:
@@ -130,6 +131,8 @@ while True:
         f"n2: {arguments['n2']}\n "
         f"Resultado: {result}"
     )
+
+    sys.argv = []
 
     if input("Pressione enter seguir com as operações ou qualquer tecla para sair"):
         break
